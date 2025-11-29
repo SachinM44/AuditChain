@@ -1,0 +1,63 @@
+# Root .gitignore for ChainAudit
+
+# Node modules
+node_modules/
+*/node_modules/
+
+# Build outputs
+dist/
+build/
+*/dist/
+*/build/
+
+# Environment files (IMPORTANT - contains private keys!)
+.env
+.env.local
+.env.*.local
+*/.env
+*/.env.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Cache
+.cache/
+.npm/
+.eslintcache
+
+# Config files with sensitive data
+.aptos/
+.chainaudit/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Package lock files (optional - uncomment if you want to ignore)
+# package-lock.json
+# yarn.lock

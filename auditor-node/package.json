@@ -1,0 +1,29 @@
+{
+  "name": "chainaudit-auditor-node",
+  "version": "0.1.0",
+  "description": "ChainAudit Auditor Node - Automated package auditing service",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "test-audit": "ts-node test-audit.ts",
+    "test": "echo \"No tests yet\""
+  },
+  "keywords": ["security", "audit", "blockchain", "aptos"],
+  "author": "Sachin",
+  "license": "MIT",
+  "dependencies": {
+    "@aptos-labs/ts-sdk": "^1.32.0",
+    "dotenv": "^16.4.0",
+    "node-fetch": "^2.7.0",
+    "tar": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/node-fetch": "^2.6.0",
+    "@types/tar": "^6.1.0",
+    "typescript": "^5.3.0",
+    "ts-node": "^10.9.0"
+  }
+}

@@ -1,0 +1,13 @@
+# Move/Aptos specific
+
+# Build artifacts
+build/
+
+# Aptos config (may contain private keys)
+.aptos/
+
+# Move prover
+.mvn_hash
+
+# Logs
+*.log

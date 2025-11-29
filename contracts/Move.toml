@@ -1,0 +1,17 @@
+[package]
+name = "chainaudit"
+version = "1.0.0"
+authors = []
+
+[addresses]
+chainaudit = "_"
+
+[dev-addresses]
+chainaudit = "0x762779f87715b377314b79420b866ca7edef615a86d0d998f733e3f5c7113f89"
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-framework.git"
+rev = "mainnet"
+subdir = "aptos-framework"
+
+[dev-dependencies]
