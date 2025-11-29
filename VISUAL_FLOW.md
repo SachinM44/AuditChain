@@ -92,7 +92,7 @@
 │  ├─> Extract tarball                                                │
 │  ├─> Call AI Engine                                                 │
 │  └─> Get result: { risk_score: 13, confidence: 0.92 }              │
-│                                                                      │
+│                                                                     │
 │  Step 3: SUBMIT                                                     │
 │  ├─> Create transaction                                             │
 │  ├─> Sign with private key                                          │
