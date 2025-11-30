@@ -5,7 +5,11 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.20.0"
+    "react-router-dom": "^6.20.0",
+    "@aptos-labs/wallet-adapter-react": "^2.4.0",
+    "@aptos-labs/wallet-adapter-ant-design": "^2.0.1",
+    "aptos": "^1.12.0",
+    "petra-plugin-wallet-adapter": "^0.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

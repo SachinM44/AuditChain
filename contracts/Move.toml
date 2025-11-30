@@ -4,10 +4,9 @@ version = "1.0.0"
 authors = []
 
 [addresses]
-chainaudit = "_"
+chainaudit = "0x65ae7329234cdb84e5b0356d6b26e77b8ceac8e90f3d487f4326580349844018"
 
 [dev-addresses]
-chainaudit = "0x762779f87715b377314b79420b866ca7edef615a86d0d998f733e3f5c7113f89"
 
 [dependencies.AptosFramework]
 git = "https://github.com/aptos-labs/aptos-framework.git"

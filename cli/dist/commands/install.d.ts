@@ -1,2 +1,2 @@
-export declare function installCommand(packageSpec: string, options: any): Promise<void>;
+export declare function installCommand(packageName: string): Promise<void>;
 //# sourceMappingURL=install.d.ts.map

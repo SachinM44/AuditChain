@@ -1,42 +1,43 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
+import chalk from 'chalk';
 import { installCommand } from './commands/install';
-import { auditCommand } from './commands/audit';
-import { historyCommand } from './commands/history';
-import { configCommand } from './commands/config';
+import { registerCommand } from './commands/register';
+import { submitCommand } from './commands/submit';
+import { packagesCommand } from './commands/packages';
 
 const program = new Command();
 
 program
   .name('chainaudit')
-  .description('ChainAudit CLI - Decentralized NPM package security auditing')
-  .version('0.1.0');
+  .description('ChainAudit - Human-driven NPM security bounty platform')
+  .version('1.0.0');
 
 program
   .command('install <package>')
-  .description('Install an npm package with security audit check')
-  .option('-f, --force', 'Force install even if high risk')
+  .description('Check package security before installing')
   .action(installCommand);
 
 program
-  .command('audit <package>')
-  .description('Request or check audit status for a package')
-  .option('-w, --watch', 'Watch for audit completion')
-  .action(auditCommand);
+  .command('register <package>')
+  .description('Register your npm package for auditing')
+  .option('-t, --tier <tier>', 'Package tier (basic/popular/enterprise)', 'basic')
+  .option('-b, --bounty <amount>', 'Initial bounty pool in APT', '20')
+  .action(registerCommand);
 
 program
-  .command('history <package>')
-  .description('View audit history for a package')
-  .action(historyCommand);
+  .command('submit <package>')
+  .description('Submit a security finding')
+  .option('-s, --severity <level>', 'Severity (low/medium/high/critical)', 'high')
+  .option('-t, --title <title>', 'Finding title')
+  .option('-d, --description <desc>', 'Finding description')
+  .action(submitCommand);
 
 program
-  .command('config')
-  .description('Configure ChainAudit settings')
-  .option('--set-threshold <value>', 'Set risk threshold (0-100)')
-  .option('--set-policy <policy>', 'Set policy: allow, warn, or block')
-  .option('--set-registry <address>', 'Set Aptos registry contract address')
-  .option('--show', 'Show current configuration')
-  .action(configCommand);
+  .command('packages')
+  .description('Browse available packages for auditing')
+  .option('-t, --tier <tier>', 'Filter by tier')
+  .action(packagesCommand);
 
 program.parse();
