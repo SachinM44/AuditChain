@@ -9,6 +9,7 @@ import AuditorDashboard from './pages/AuditorDashboard';
 import PackageExplorer from './pages/PackageExplorer';
 import RegisterPackage from './pages/RegisterPackage';
 import SubmitFinding from './pages/SubmitFinding';
+import ReviewFindings from './pages/ReviewFindings';
 import './styles/App.css';
 
 const wallets = [new PetraWallet()];
@@ -33,6 +34,7 @@ function App() {
               <Route path="/packages" element={<PackageExplorer />} />
               <Route path="/register" element={<RegisterPackage />} />
               <Route path="/submit" element={<SubmitFinding />} />
+              <Route path="/review/:packageName" element={<ReviewFindings />} />
             </Routes>
           </main>
         </div>

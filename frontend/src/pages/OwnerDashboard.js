@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css';
 
 function OwnerDashboard() {
   const { account, connected } = useWallet();
+  const navigate = useNavigate();
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -79,9 +80,9 @@ function OwnerDashboard() {
   };
 
   const viewFindings = (packageName) => {
-    // Store selected package and navigate
+    // Store selected package and navigate to review page
     localStorage.setItem('selected_package', packageName);
-    alert(`Viewing findings for "${packageName}":\n\nPending: ${getPendingCount(packageName)}\n\n(In production, this would open a detailed review page)`);
+    navigate(`/review/${packageName}`);
   };
 
   if (!connected) {
