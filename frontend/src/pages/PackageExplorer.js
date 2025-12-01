@@ -10,13 +10,29 @@ function PackageExplorer() {
   }, []);
 
   const loadPackages = async () => {
-    // Mock data - in real implementation, query blockchain
-    setPackages([
+    // Mock data with popular packages
+    const mockPackages = [
+      {
+        name: 'axios',
+        tier: 'Popular',
+        securityScore: 92,
+        bountyPool: 50,
+        totalFindings: 3,
+        lastAudit: '2 days ago'
+      },
+      {
+        name: 'zod',
+        tier: 'Enterprise',
+        securityScore: 95,
+        bountyPool: 100,
+        totalFindings: 1,
+        lastAudit: '1 week ago'
+      },
       {
         name: 'express',
         tier: 'Popular',
-        securityScore: 75,
-        bountyPool: 50,
+        securityScore: 88,
+        bountyPool: 75,
         totalFindings: 5,
         lastAudit: '3 days ago'
       },
@@ -24,11 +40,73 @@ function PackageExplorer() {
         name: 'lodash',
         tier: 'Enterprise',
         securityScore: 90,
-        bountyPool: 100,
+        bountyPool: 120,
+        totalFindings: 4,
+        lastAudit: '5 days ago'
+      },
+      {
+        name: 'react',
+        tier: 'Enterprise',
+        securityScore: 94,
+        bountyPool: 200,
         totalFindings: 2,
-        lastAudit: '1 week ago'
+        lastAudit: '1 day ago'
+      },
+      {
+        name: 'typescript',
+        tier: 'Enterprise',
+        securityScore: 96,
+        bountyPool: 150,
+        totalFindings: 1,
+        lastAudit: '4 days ago'
+      },
+      {
+        name: 'shelby',
+        tier: 'Popular',
+        securityScore: 93,
+        bountyPool: 60,
+        totalFindings: 2,
+        lastAudit: '6 hours ago'
+      },
+      {
+        name: 'risein',
+        tier: 'Enterprise',
+        securityScore: 97,
+        bountyPool: 85,
+        totalFindings: 1,
+        lastAudit: '2 days ago'
+      },
+      {
+        name: 'quicky',
+        tier: 'Basic',
+        securityScore: 100,
+        bountyPool: 30,
+        totalFindings: 0,
+        lastAudit: '1 day ago'
       }
-    ]);
+    ];
+    
+    // Merge with user-registered packages from localStorage
+    const storedPackages = localStorage.getItem('chainaudit_packages');
+    if (storedPackages) {
+      const userPackages = JSON.parse(storedPackages);
+      const tierNames = ['Basic', 'Popular', 'Enterprise'];
+      
+      userPackages.forEach(pkg => {
+        if (!mockPackages.find(p => p.name === pkg.name)) {
+          mockPackages.push({
+            name: pkg.name,
+            tier: tierNames[pkg.tier] || 'Basic',
+            securityScore: pkg.acceptedFindings > 0 ? Math.max(0, 100 - (pkg.acceptedFindings * 10)) : 100,
+            bountyPool: pkg.bountyPool,
+            totalFindings: pkg.totalFindings || 0,
+            lastAudit: 'Recently'
+          });
+        }
+      });
+    }
+    
+    setPackages(mockPackages);
   };
 
   const filteredPackages = packages.filter(pkg =>

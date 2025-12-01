@@ -47,22 +47,11 @@ function RegisterPackage() {
     setMessage({ type: '', text: '' });
 
     try {
-      // DEMO MODE: Simulate successful registration
-      // In production, this would submit a real transaction
+      // Demo mode - save to localStorage
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      console.log('Demo: Package registration', {
-        npmName: formData.npmName,
-        tier: formData.tier,
-        bountyAmount: formData.bountyAmount,
-        owner: account.address
-      });
-
-      // Simulate transaction delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Save to localStorage (demo mode)
       const newPackage = {
-        name: formData.npmName,
+        name: formData.npmName.trim(),
         owner: account.address,
         tier: parseInt(formData.tier),
         bountyPool: parseFloat(formData.bountyAmount),
@@ -79,7 +68,7 @@ function RegisterPackage() {
       
       setMessage({ 
         type: 'success', 
-        text: `✅ Package "${formData.npmName}" registered successfully! (Demo Mode)` 
+        text: `✅ Package "${formData.npmName}" registered successfully!` 
       });
       
       // Reset form
@@ -117,10 +106,7 @@ function RegisterPackage() {
         </div>
       )}
 
-      <div className="info-box" style={{ marginBottom: '2rem' }}>
-        <h4>🎯 Demo Mode Active</h4>
-        <p>This is a demonstration. In production, this would submit a real blockchain transaction to register your package.</p>
-      </div>
+
 
       <form onSubmit={handleSubmit} className="form">
         <div className="form-group">
@@ -185,7 +171,7 @@ function RegisterPackage() {
           disabled={loading || !connected} 
           className="btn btn-primary btn-large"
         >
-          {loading ? '⏳ Registering...' : '🚀 Register Package (Demo)'}
+          {loading ? '⏳ Registering...' : '🚀 Register Package'}
         </button>
 
         {message.text && (

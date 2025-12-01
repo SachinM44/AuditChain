@@ -5,6 +5,7 @@ module chainaudit::PackageRegistry {
     use aptos_framework::aptos_coin::AptosCoin;
     use aptos_framework::timestamp;
     use aptos_std::table::{Self, Table};
+    use std::vector;
 
     const TIER_BASIC: u8 = 0;
     const TIER_POPULAR: u8 = 1;
@@ -38,10 +39,18 @@ module chainaudit::PackageRegistry {
         total_packages: u64,
     }
 
+    // Separate resource for package names list (backward compatible)
+    struct PackageNamesList has key {
+        names: vector<String>,
+    }
+
     public entry fun initialize(admin: &signer) {
         move_to(admin, PackageRegistry {
             packages: table::new(),
             total_packages: 0,
+        });
+        move_to(admin, PackageNamesList {
+            names: vector::empty(),
         });
     }
 
@@ -52,7 +61,7 @@ module chainaudit::PackageRegistry {
         tier: u8,
         registration_fee: u64,
         bounty_amount: u64
-    ) acquires PackageRegistry {
+    ) acquires PackageRegistry, PackageNamesList {
         let owner_addr = signer::address_of(owner);
         let registry = borrow_global_mut<PackageRegistry>(registry_addr);
         
@@ -73,6 +82,12 @@ module chainaudit::PackageRegistry {
             total_rewards_paid: 0,
             created_at: timestamp::now_seconds(),
             status: STATUS_ACTIVE
+        };
+
+        // Add to names list
+        if (exists<PackageNamesList>(registry_addr)) {
+            let names_list = borrow_global_mut<PackageNamesList>(registry_addr);
+            vector::push_back(&mut names_list.names, npm_name);
         };
 
         table::add(&mut registry.packages, package.npm_name, package);
@@ -128,5 +143,55 @@ module chainaudit::PackageRegistry {
         
         let pkg = table::borrow(&registry.packages, npm_name);
         (true, pkg.owner, pkg.tier, pkg.bounty_pool, pkg.credibility_score, pkg.total_findings, pkg.accepted_findings)
+    }
+
+    // Migration function to add existing packages to the names list
+    public entry fun add_package_to_list(
+        admin: &signer,
+        registry_addr: address,
+        npm_name: String
+    ) acquires PackageRegistry, PackageNamesList {
+        // Verify the package exists
+        let registry = borrow_global<PackageRegistry>(registry_addr);
+        assert!(table::contains(&registry.packages, npm_name), E_NOT_FOUND);
+        
+        // Add to names list if not already there
+        let names_list = borrow_global_mut<PackageNamesList>(registry_addr);
+        if (!vector::contains(&names_list.names, &npm_name)) {
+            vector::push_back(&mut names_list.names, npm_name);
+        };
+    }
+
+    #[view]
+    public fun get_all_packages(
+        registry_addr: address
+    ): vector<String> acquires PackageNamesList {
+        if (!exists<PackageNamesList>(registry_addr)) {
+            return vector::empty()
+        };
+        
+        let names_list = borrow_global<PackageNamesList>(registry_addr);
+        names_list.names
+    }
+
+    #[view]
+    public fun get_package_details(
+        registry_addr: address,
+        npm_name: String
+    ): (String, u8, u64, u64) acquires PackageRegistry {
+        let registry = borrow_global<PackageRegistry>(registry_addr);
+        let pkg = table::borrow(&registry.packages, npm_name);
+        (pkg.npm_name, pkg.tier, pkg.bounty_pool, pkg.total_findings)
+    }
+
+    #[view]
+    public fun get_total_packages(
+        registry_addr: address
+    ): u64 acquires PackageRegistry {
+        if (!exists<PackageRegistry>(registry_addr)) {
+            return 0
+        };
+        let registry = borrow_global<PackageRegistry>(registry_addr);
+        registry.total_packages
     }
 }

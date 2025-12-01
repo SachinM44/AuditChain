@@ -8,7 +8,12 @@ function getAptosClient() {
     if (!client) {
         const config = new ts_sdk_1.AptosConfig({
             network: ts_sdk_1.Network.TESTNET,
-            fullnode: config_1.NODE_URL
+            fullnode: config_1.NODE_URL,
+            clientConfig: {
+                HEADERS: {
+                    'Authorization': `Bearer ${config_1.API_KEY}`
+                }
+            }
         });
         client = new ts_sdk_1.Aptos(config);
     }

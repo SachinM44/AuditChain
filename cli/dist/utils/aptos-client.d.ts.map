@@ -1,1 +1,1 @@
-{"version":3,"file":"aptos-client.d.ts","sourceRoot":"","sources":["../../src/utils/aptos-client.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAwB,MAAM,oBAAoB,CAAC;AAKjE,wBAAgB,cAAc,IAAI,KAAK,CAStC"}
+{"version":3,"file":"aptos-client.d.ts","sourceRoot":"","sources":["../../src/utils/aptos-client.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAwB,MAAM,oBAAoB,CAAC;AAKjE,wBAAgB,cAAc,IAAI,KAAK,CActC"}

@@ -19,7 +19,7 @@ function OwnerDashboard() {
     setLoading(true);
     
     try {
-      // Get registered packages from localStorage (demo mode)
+      // Get registered packages from localStorage
       const storedPackages = localStorage.getItem('chainaudit_packages');
       let userPackages = storedPackages ? JSON.parse(storedPackages) : [];
       
@@ -42,21 +42,6 @@ function OwnerDashboard() {
           acceptedFindings: accepted
         };
       });
-      
-      // If no packages, show example
-      if (userPackages.length === 0) {
-        userPackages = [
-          {
-            name: 'my-awesome-package',
-            owner: account.address,
-            tier: 1,
-            bountyPool: 50,
-            credibility: 85,
-            totalFindings: 5,
-            acceptedFindings: 4
-          }
-        ];
-      }
       
       setPackages(userPackages);
     } catch (error) {
